@@ -1,6 +1,7 @@
 package com.mycompany.users;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,4 +19,11 @@ public class UserService {
 		repo.save(user);
 	}
 	
+	public User get(Integer id) throws UserNotFoundException {
+		Optional<User> result = repo.findById(id);
+		if (result.isPresent()) {
+			return result.get();
+		}
+		throw new UserNotFoundException("Não foi possível encontrar usuário com o ID" + id);
+	}
 }
